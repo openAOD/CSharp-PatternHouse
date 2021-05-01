@@ -1,4 +1,4 @@
-# Python- PatternHouse
+# CSharp- PatternHouse
 
 <p align="center">
   <img src="https://github.com/aryashah2k/Printing-Pattern-Programs/blob/main/assets/python.png">

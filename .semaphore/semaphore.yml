@@ -1,0 +1,24 @@
+version: v1.0
+name: Initial Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Testing
+    task:
+      jobs:
+        - name: Tests
+          commands:
+            - sudo apt install gnupg ca-certificates
+            - 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF'
+            - 'echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list'
+            - sudo apt update
+            - sudo apt install mono-complete
+            - checkout
+            - 'git clone https://github.com/openAOD/Central.git'
+            - cp Central/TestSuite/test.sh .
+            - rm -rf Central
+            - export DATE=$(date)
+            - bash test.sh cpp | tee "test-report-$DATE"
+            - artifact push project "test-report-$DATE"
